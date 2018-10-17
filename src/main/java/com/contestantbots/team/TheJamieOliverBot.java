@@ -32,6 +32,7 @@ public class TheJamieOliverBot extends Bot {
         List<Move> exploreMoves = new ArrayList<>();
 
         exploreMoves.addAll(gameState.getPlayers().stream()
+                .filter(player -> isMyPlayer(player))
                 .map(player -> doMove(gameState, nextPositions, player))
                 .collect(Collectors.toList()));
 
@@ -59,6 +60,9 @@ public class TheJamieOliverBot extends Bot {
         }
     }
 
+    private boolean isMyPlayer(final Player player) {
+        return player.getOwner().equals(getId());
+    }
     /*
      * Run this main as a java application to test and debug your code within your IDE.
      * After each turn, the current state of the game will be printed as an ASCII-art representation in the console.
