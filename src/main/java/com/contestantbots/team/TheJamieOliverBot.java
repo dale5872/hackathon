@@ -2,12 +2,13 @@ package com.contestantbots.team;
 
 import com.contestantbots.util.GameStateLogger;
 import com.scottlogic.hackathon.client.Client;
-import com.scottlogic.hackathon.game.Bot;
-import com.scottlogic.hackathon.game.GameState;
-import com.scottlogic.hackathon.game.Move;
+import com.scottlogic.hackathon.game.*;
+import com.contestantbots.util.MoveImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 
 public class TheJamieOliverBot extends Bot {
     private final GameStateLogger gameStateLogger;
@@ -20,9 +21,22 @@ public class TheJamieOliverBot extends Bot {
     @Override
     public List<Move> makeMoves(final GameState gameState) {
         gameStateLogger.process(gameState);
-        return new ArrayList<>();
+        List<Move> moves = new ArrayList<>();
+        moves.addAll(doExplore(gameState));
+        return moves;
     }
 
+    private List<Move> doExplore(final GameState gameState) {
+        List<Move> exploreMoves = new ArrayList<>();
+        List<Position> nextPositions = new ArrayList<>();
+
+        exploreMoves.addAll(gameState.getPlayers().stream()
+                .map(player -> new MoveImpl(player.getId(), nextPositions, player))
+                .collect(Collectors.toList()));
+
+        System.out.println(exploreMoves.size() + " players exploring");
+        return exploreMoves;
+    }
 
     /*
      * Run this main as a java application to test and debug your code within your IDE.
