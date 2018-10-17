@@ -7,6 +7,7 @@ import com.contestantbots.util.MoveImpl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,7 +26,7 @@ public class TheJamieOliverBot extends Bot {
         gameStateLogger.process(gameState);
         List<Move> moves = new ArrayList<>();
         List<Position> nextPositions = new ArrayList<>();
-        java.util.Map<Player, Position> assignedPlayerDestinations = new HashMap<>();
+        Map<Player, Position> assignedPlayerDestinations = new HashMap<>();
         moves.addAll(doCollect(gameState, assignedPlayerDestinations, nextPositions));
         moves.addAll(doExplore(gameState, nextPositions));
         return moves;
