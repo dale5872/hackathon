@@ -71,7 +71,7 @@ public class TheJamieOliverBot extends Bot {
                 "--debug",
 
                 // Use this class as the 'main' Bot
-                "--className", ExampleBot.class.getName()
+                "--className", TheJamieOliverBot.class.getName()
         };
 
         Client.main(args);
