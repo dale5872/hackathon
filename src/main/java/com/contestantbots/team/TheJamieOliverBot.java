@@ -7,6 +7,7 @@ import com.contestantbots.util.MoveImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -22,20 +23,40 @@ public class TheJamieOliverBot extends Bot {
     public List<Move> makeMoves(final GameState gameState) {
         gameStateLogger.process(gameState);
         List<Move> moves = new ArrayList<>();
-        moves.addAll(doExplore(gameState));
+        List<Position> nextPositions = new ArrayList<>();
+        moves.addAll(doExplore(gameState, nextPositions));
         return moves;
     }
 
-    private List<Move> doExplore(final GameState gameState) {
+    private List<Move> doExplore(final GameState gameState, final List<Position> nextPositions) {
         List<Move> exploreMoves = new ArrayList<>();
-        List<Position> nextPositions = new ArrayList<>();
 
         exploreMoves.addAll(gameState.getPlayers().stream()
-                .map(player -> new MoveImpl(player.getId(), nextPositions, player))
+                .map(player -> doMove(gameState, nextPositions, player))
                 .collect(Collectors.toList()));
 
         System.out.println(exploreMoves.size() + " players exploring");
         return exploreMoves;
+    }
+
+    private Move doMove(final GameState gameState, final List<Position> nextPositions, final Player player) {
+        Direction direction;
+        do {
+            direction = Direction.random();
+        } while (!canMove(gameState, nextPositions, player, direction));
+        return new MoveImpl(player.getId(), direction);
+    }
+
+    private boolean canMove(final GameState gameState, final List<Position> nextPositions, final Player player, final Direction direction) {
+        Set<Position> outOfBounds = gameState.getOutOfBoundsPositions();
+        Position newPosition = gameState.getMap().getNeighbour(player.getPosition(), direction);
+        if (!nextPositions.contains(newPosition)
+                && !outOfBounds.contains(newPosition)) {
+            nextPositions.add(newPosition);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /*
