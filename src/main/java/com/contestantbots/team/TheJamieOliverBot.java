@@ -6,6 +6,7 @@ import com.scottlogic.hackathon.game.*;
 import com.contestantbots.util.MoveImpl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,6 +25,8 @@ public class TheJamieOliverBot extends Bot {
         gameStateLogger.process(gameState);
         List<Move> moves = new ArrayList<>();
         List<Position> nextPositions = new ArrayList<>();
+        java.util.Map<Player, Position> assignedPlayerDestinations = new HashMap<>();
+        moves.addAll(doCollect(gameState, assignedPlayerDestinations, nextPositions));
         moves.addAll(doExplore(gameState, nextPositions));
         return moves;
     }
@@ -63,6 +66,14 @@ public class TheJamieOliverBot extends Bot {
     private boolean isMyPlayer(final Player player) {
         return player.getOwner().equals(getId());
     }
+
+    private List<Move> doCollect(final GameState gameState, final Map<Player, Position> assignedPlayerDestinations, final List<Position> nextPositions) {
+        List<Move> collectMoves = new ArrayList<>();
+        System.out.println(collectMoves.size() + " players collecting");
+        return collectMoves;
+    }
+
+
     /*
      * Run this main as a java application to test and debug your code within your IDE.
      * After each turn, the current state of the game will be printed as an ASCII-art representation in the console.
