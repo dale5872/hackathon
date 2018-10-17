@@ -44,9 +44,9 @@ public class TheJamieOliverBot extends Bot {
 
         updateUnseenLocations(gameState);
         moves.addAll(doCollect(gameState, assignedPlayerDestinations, nextPositions));
+        moves.addAll(doAttack(gameState, assignedPlayerDestinations, nextPositions));
         moves.addAll(doExploreUnseen(gameState, assignedPlayerDestinations, nextPositions));
         moves.addAll(doExplore(gameState, nextPositions));
-        moves.addAll(doAttack(gameState, assignedPlayerDestinations, nextPositions));
         return moves;
     }
 
@@ -65,6 +65,7 @@ public class TheJamieOliverBot extends Bot {
     private Move doMove(final GameState gameState, final List<Position> nextPositions, final Player player) {
         Direction direction;
         do {
+
             direction = Direction.random();
         } while (!canMove(gameState, nextPositions, player, direction));
         return new MoveImpl(player.getId(), direction);
