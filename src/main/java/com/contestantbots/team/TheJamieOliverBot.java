@@ -74,8 +74,8 @@ public class TheJamieOliverBot extends Bot {
     private boolean canMove(final GameState gameState, final List<Position> nextPositions, final Player player, final Direction direction) {
         Set<Position> outOfBounds = gameState.getOutOfBoundsPositions();
         Position newPosition = gameState.getMap().getNeighbour(player.getPosition(), direction);
-        if (!nextPositions.contains(newPosition)
-                && !outOfBounds.contains(newPosition)) {
+        // add water in with if statement, cannot move into water
+        if (!nextPositions.contains(newPosition) && !outOfBounds.contains(newPosition)) {
             nextPositions.add(newPosition);
             return true;
         } else {
