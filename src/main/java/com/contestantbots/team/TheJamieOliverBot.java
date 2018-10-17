@@ -9,11 +9,11 @@ import com.scottlogic.hackathon.game.Move;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExampleBot extends Bot {
+public class TheJamieOliverBot extends Bot {
     private final GameStateLogger gameStateLogger;
 
-    public ExampleBot() {
-        super("Example Bot");
+    public TheJamieOliverBot() {
+        super("The Jamie Oliver Bot");
         gameStateLogger = new GameStateLogger(getId());
     }
 
